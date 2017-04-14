@@ -2,7 +2,7 @@
 PHP implementation of Milight v6 API
 
 Example of use : 
-
+```php
 <?php
 
 require_once __DIR__ . '/v6/Milight.php';
@@ -24,3 +24,4 @@ try {
 }
 
 unset ($milight);
+```
