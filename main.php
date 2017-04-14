@@ -1,8 +1,3 @@
-# MilightAPI
-PHP implementation of Milight v6 API
-
-Example of use : 
-
 <?php
 
 require_once __DIR__ . '/v6/Milight.php';
