@@ -10,10 +10,26 @@ require_once __DIR__ . '/ICommand.php';
 class WWCommand implements ICommand
 {
     private $_scope;
+    private $_bytesCommand = array (
+        'link'       => array (0x07, 0x00, 0x00, 0x00, 0x00, 0x00),
+        'unlink'     => array (0x07, 0x00, 0x00, 0x00, 0x00, 0x00),
+        'on'         => array (0x07, 0x03, 0x01, 0x00, 0x00, 0x00),
+        'off'        => array (0x07, 0x03, 0x02, 0x00, 0x00, 0x00),
+        'white'      => array (0x07, 0x03, 0x05, 0x00, 0x00, 0x00),
+        'blue'       => array (0x07, 0x01, 0xBA, 0xBA, 0xBA, 0xBA),
+        'aqua'       => array (0x07, 0x01, 0x85, 0x85, 0x85, 0x85),
+        'red'        => array (0x07, 0x01, 0xFF, 0xFF, 0xFF, 0xFF),
+        'lavender'   => array (0x07, 0x01, 0xD9, 0xD9, 0xD9, 0xD9),
+        'green'      => array (0x07, 0x01, 0x7A, 0x7A, 0x7A, 0x7A),
+        'lime'       => array (0x07, 0x01, 0x54, 0x54, 0x54, 0x54),
+        'orange'     => array (0x07, 0x01, 0x1E, 0x1E, 0x1E, 0x1E),
+        'yellow'     => array (0x07, 0x01, 0x3B, 0x3B, 0x3B, 0x3B),
+        'brightness' => array (0x07, 0x02, 0x64, 0x00, 0x00, 0x00)
+    );
     
     public function __construct()
     {
-        $this->_scope = 0x31;   
+        $this->_scope = 0x31;
     }
     
     public function getChecksum($command, $zone)
@@ -40,8 +56,11 @@ class WWCommand implements ICommand
             unpack('c', $bridge[20])[1], 0x00, 0x00,
             0x01, $this->_scope, 0x00, 0x00
             );
-            foreach ($bytes as $byte)
-                $command[] = $byte;
+            if (!empty ($bytes))
+            {
+               foreach ($bytes as $byte)
+                   $command[] = $byte;
+            }
             $command[] = $zone;
             $command[] = 0x00;
             $command[] = $checksum;
@@ -50,48 +69,57 @@ class WWCommand implements ICommand
     }
     
     
-    public function switchOn($bridge, $zone)
+    public function switchOn($bridge, $args)
     {
         $this->_scope = 0x31;
-        $bytesOn      = array (0x07, 0x03, 0x01, 0x00, 0x00, 0x00);
         
-        return $this->createByteArray($bytesOn, $bridge, $zone);
+        return $this->createByteArray($this->_bytesCommand[$args['action']], $bridge, $args['zone']);
     }
     
-    public function switchOff($bridge, $zone)
+    public function switchOff($bridge, $args)
     {
         $this->_scope = 0x31;
-        $bytesOff     = array (0x07, 0x03, 0x02, 0x00, 0x00, 0x00);
         
-        return $this->createByteArray($bytesOff, $bridge, $zone);
+        return $this->createByteArray($this->_bytesCommand[$args['action']], $bridge, $args['zone']);
     }
     
-    public function link($bridge, $zone)
+    public function link($bridge, $args)
     {
         $this->_scope = 0x3D;
-        $bytesLink    = array (0x07, 0x00, 0x00, 0x00, 0x00, 0x00);
        
-        return $this->createByteArray($bytesLink, $bridge, $zone);
+        return $this->createByteArray($this->_bytesCommand[$args['action']], $bridge, $args['zone']);
     }
     
-    public function unlink($bridge, $zone)
+    public function unlink($bridge, $args)
     {
         $this->_scope = 0x3E;
-        $bytesUnlink  = array (0x07, 0x00, 0x00, 0x00, 0x00, 0x00);
         
-        return $this->createByteArray($bytesUnlink, $bridge, $zone);
+        return $this->createByteArray($this->_bytesCommand[$args['action']], $bridge, $args['zone']);
     }
     
-    public function setColor($color, $bridge, $zone)
+    public function setBrightness($bridge, $args)
+    {
+        if (!isset ($args['intensity']))
+        {
+            die("You must specify the insity");
+        }
+        $this->_scope  = 0x31;
+        $brightness    = $this->_bytesCommand[$args['action']];
+        $brightness[2] = $args['intensity'];
+        
+        return $this->createByteArray($brightness, $bridge, $args['zone']);
+    }
+    
+    public function setColor($bridge, $args)
     {
         $this->_scope = 0x31; 
-        $bytes        = null;
         
-        if ($color == "white")
+        if (!isset ($this->_bytesCommand[$args['color']]))
         {
-            $bytes = array (0x07, 0x03, 0x05, 0x00, 0x00, 0x00);
+            die("Unkown color");
         }
-        
-        return $this->createByteArray($bytes, $bridge, $zone);
+
+
+        return $this->createByteArray($this->_bytesCommand[$args['color']], $bridge, $args['zone']);
     }
 }

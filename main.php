@@ -6,13 +6,40 @@ $milight = new v6\Milight("192.168.0.42");
 
 try {
    $milight->setColorRendering(v6\ColorRendering::WW);
-   $milight->exec("link", 0x01);
+   
+   $args = array (
+       'action' => 'link',
+       'zone'   => 0x01
+   );
+   $milight->exec($args);
    sleep(5);
-   $milight->exec("off", 0x01);
+   
+   $args['action'] = 'off';  
+   $milight->exec($args);
    sleep(2);
-   $milight->exec("on", 0x01);
+   
+   $args['action'] = 'on';  
+   $milight->exec($args);
    sleep(2);
-   $milight->exec("color", 0x01, "white");
+   
+   $args['action'] = 'color';
+   $args['color'] = 'lime';
+   $milight->exec($args);
+   sleep(2);
+   
+   $args['color'] = 'white';
+   $milight->exec($args);
+   sleep(2);
+   
+   $args['action'] = 'brightness';
+   $args['intensity'] = 0x32;
+   $milight->exec($args);
+   sleep(2);
+   
+   $args['action'] = 'off';
+   $milight->exec($args);
+   sleep(2);
+   
 } catch (Exception $e) {
     echo $e->getMessage();
     die();

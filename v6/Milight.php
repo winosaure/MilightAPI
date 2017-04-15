@@ -82,7 +82,7 @@ class Milight
         return $this->_colorRendering;
     }
     
-    public function exec($cmd, $zone, $color = null)
+    public function exec($args)
     {
         if (empty ($this->_command))
         {
@@ -91,26 +91,30 @@ class Milight
         var_dump($this->_bridge);
         if ($this->_sock !== FALSE && !empty ($this->_bridge))
         {
-            switch ($cmd)
+            switch ($args['action'])
             {
                 case 'on':
-                    $bytesToSend = $this->_command->switchOn($this->_bridge, $zone);
+                    $bytesToSend = $this->_command->switchOn($this->_bridge, $args);
                     $this->sendCommand($bytesToSend);
                     break;
                 case 'off':
-                    $bytesToSend = $this->_command->switchOff($this->_bridge, $zone);
+                    $bytesToSend = $this->_command->switchOff($this->_bridge, $args);
                     $this->sendCommand($bytesToSend);
                     break;
                 case 'link':
-                    $bytesToSend = $this->_command->link($this->_bridge, $zone);
+                    $bytesToSend = $this->_command->link($this->_bridge, $args);
                     $this->sendCommand($bytesToSend);
                     break;
                 case 'unlink':
-                    $bytesToSend = $this->_command->unlink($this->_bridge, $zone);
+                    $bytesToSend = $this->_command->unlink($this->_bridge, $args);
                     $this->sendCommand($bytesToSend);
                     break;
                 case 'color':
-                    $bytesToSend = $this->_command->setColor($color, $this->_bridge, $zone);
+                    $bytesToSend = $this->_command->setColor($this->_bridge, $args);
+                    $this->sendCommand($bytesToSend);
+                    break;
+                case 'brightness':
+                    $bytesToSend = $this->_command->setBrightness($this->_bridge, $args);
                     $this->sendCommand($bytesToSend);
                     break;
                 default :
