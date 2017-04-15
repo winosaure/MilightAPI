@@ -14,19 +14,19 @@ Interface ICommand
      * Switch on the light
      * 
      * @param type $bridge
-     * @param type $zone
+     * @param type $args
      */
     
-    public function switchOn($bridge, $zone);
+    public function switchOn($bridge, $args);
     
     /**
      * 
      * Switch off the light
      * 
      * @param type $bridge
-     * @param type $zone
+     * @param type $args
      */
-    public function switchOff($bridge, $zone);
+    public function switchOff($bridge, $args);
     
     /**
      * 
@@ -34,10 +34,10 @@ Interface ICommand
      *  within 3 seconds of lightbulb socket power on
      * 
      * @param type $bridge
-     * @param type $zone
+     * @param type $args
      */
     
-    public function link($bridge, $zone);
+    public function link($bridge, $args);
     
     /**
      * 
@@ -45,17 +45,16 @@ Interface ICommand
      * within 3 seconds of lightbulb socket power on
      * 
      * @param type $bridge
-     * @param type $zone
+     * @param type $args
      */
-    public function unlink($bridge, $zone);
+    public function unlink($bridge, $args);
     
     /**
      * 
      * Change the color of the bulb
      * 
-     * @param type $color
      * @param type $bridge
-     * @param type $zone
+     * @param type $args
      */
-    public function setColor($color, $bridge, $zone);
+    public function setColor($bridge, $args);
 }
