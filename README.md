@@ -5,12 +5,15 @@ Example of use :
 ```php
 <?php
 
-require_once __DIR__ . '/v6/Milight.php';
+require_once "vendor/autoload.php";
 
-$milight = new v6\Milight("192.168.0.42");
+use Winosaure\MilightApi\v6\Milight;
+use Winosaure\MilightApi\v6\ColorRendering;
+
+$milight = new Milight("192.168.0.42");
 
 try {
-   $milight->setColorRendering(v6\ColorRendering::WW);
+   $milight->setColorRendering(ColorRendering::WW);
    
    $args = array (
        'action' => 'link',

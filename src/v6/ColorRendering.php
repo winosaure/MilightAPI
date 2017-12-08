@@ -1,5 +1,6 @@
 <?php
-namespace v6;
+
+namespace Winosaure\MilightApi\v6;
 
 /**
  * 
