@@ -1,15 +1,11 @@
 <?php
-namespace v6;
+namespace Winosaure\MilightApi\v6;
 
 /**
  * Entry point
  *
  * @author willi
  */
-
-require_once __DIR__ . '/ColorRendering.php';
-require_once __DIR__ . '/Command/WWCommand.php';
-require_once __DIR__ . '/Command/CommandFactory.php';
 
 class Milight
 {

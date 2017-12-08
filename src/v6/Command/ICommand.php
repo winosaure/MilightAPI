@@ -1,5 +1,6 @@
 <?php
-namespace v6\Command;
+
+namespace Winosaure\MilightApi\v6\Command;
 
 /**
  * This Interface will cover all implementation of different

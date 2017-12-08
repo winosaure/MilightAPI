@@ -1,11 +1,10 @@
 <?php
-namespace v6\Command;
+
+namespace Winosaure\MilightApi\v6\Command;
 
 /**
  * @author willi
  */
-
-require_once __DIR__ . '/ICommand.php';
 
 class WWCommand implements ICommand
 {
