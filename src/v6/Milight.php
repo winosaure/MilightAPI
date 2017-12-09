@@ -82,7 +82,7 @@ class Milight
     {
         if (empty ($this->_command))
         {
-            throw new Exception ("You must set a color rendering");
+            throw new \Exception ("You must set a color rendering");
         }
         var_dump($this->_bridge);
         if ($this->_sock !== FALSE && !empty ($this->_bridge))
@@ -119,7 +119,7 @@ class Milight
         }
         else
         {
-            throw new Exception ("socket or bridge error");
+            throw new \Exception ("socket or bridge error");
         }
     }
     
