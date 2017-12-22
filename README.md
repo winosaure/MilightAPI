@@ -1,7 +1,13 @@
 # MilightAPI
-PHP implementation of Milight v6 API
 
-Example of use : 
+## About
+
+This library provide an high level abstraction of different Milight bulb. This is written in PHP and it's working with V6 API of limitessled.
+
+/!\ Currently Only RGBWW led bulb are supported. Feel free to contribute and add new command.
+
+
+## Example of use 
 ```php
 <?php
 
